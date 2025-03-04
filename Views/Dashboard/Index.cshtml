@@ -1,0 +1,37 @@
+﻿@model ApiResponse
+<div class="container mt-4">
+    <h2 class="mb-3 text-dark text-center font-weight-bold">
+        Exchange Rate of @Model.Data.Payload.Select(i => i.Date).FirstOrDefault()
+    </h2>
+    <table id="exchangeRatesTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Currency</th>
+                <th>ISO Code</th>
+                <th>Unit</th>
+                <th>Buy Rate</th>
+                <th>Sell Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payload in Model.Data.Payload)
+            {
+                foreach (var rate in payload.Rates)
+                {
+                    <tr>
+                        <td>@rate.Currency.Name</td>
+                        <td>@rate.Currency.Iso3</td>
+                        <td>@rate.Currency.Unit</td>
+                        <td>@rate.Buy</td>
+                        <td>@rate.Sell</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#exchangeRatesTable').DataTable();
+    });
+</script>

@@ -1,0 +1,66 @@
+﻿@model List<ReportModel>
+@{
+    var fromdate = ViewBag.fromDate ?? string.Empty;
+    var toDate =  ViewBag.toDate ?? string.Empty;
+}
+
+<div class="container">
+    <h2>Transaction Report</h2>
+    <div class="row">
+        <form asp-action="Index" method="post">
+            <div class="form-group">
+                <label for="fromDate">From Date</label>
+                <input type="date" id="fromDate" name="fromDate" class="form-control" value="@fromdate" />
+            </div>
+            <div class="form-group">
+                <label for="toDate">To Date</label>
+                <input type="date" id="toDate" name="toDate" class="form-control" value="@toDate" />
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Filter</button>
+        </form>
+    </div>
+   <div class="row mt-2">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Sender Name</th>
+                    <th>Sender Address</th>
+                    <th>Sender Country</th>
+                    <th>Receiver Name</th>
+                    <th>Receiver Address</th>
+                    <th>Receiver Country</th>
+                    <th>Receiver BankName</th>
+                    <th>Receiver BankAccNo</th>
+                    <th>Sender Bank</th>
+                    <th>Sender Account Number</th>
+                    <th>Transfer Amount</th>
+                    <th>Exchange Rate</th>
+                    <th>Payout Amount</th>
+                    <th>Transfer Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var report in Model)
+                {
+                    <tr>
+                        <td>@report.SenderDetails.FirstName @report.SenderDetails.MiddleName @report.SenderDetails.LastName</td>
+                        <td>@report.SenderDetails.Address</td>
+                        <td>@report.SenderDetails.Country</td>
+                        <td>@report.ReceiverDetails.FirstName @report.SenderDetails.MiddleName @report.ReceiverDetails.LastName</td>
+                        <td>@report.ReceiverDetails.Address</td>
+                        <td>@report.ReceiverDetails.Country</td>
+                        <td>@report.ReceiverBankName</td>
+                        <td>@report.ReceiverAcctNo</td>
+                        <td>@report.SenderBankName</td>
+                        <td>@report.SenderAcctNo</td>
+                        <td>@report.TransferAmount</td>
+                        <td>@report.ExchangeRate</td>
+                        <td>@report.PayoutAmount</td>
+                        <td>@report.TransactionDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+   </div>
+
+</div>

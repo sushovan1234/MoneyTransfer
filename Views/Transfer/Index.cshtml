@@ -1,0 +1,88 @@
+﻿@model TransferVM
+<style>
+    .note-box {
+        background-color: #f0f8ff;
+        border: 1px solid #dcdcdc;
+        padding: 10px;
+        margin-top: 10px;
+        font-style: italic;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        Transfer Money
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"></h5>
+        <div class="note-box">
+            <strong>Exchange Rate: @ViewBag.ExchangeRate</strong>
+        </div>
+        <form asp-action="Index" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-1">
+                <label asp-for="fromCurrency" class="form-label"></label>
+                <input asp-for="fromCurrency" class="form-control" placeholder="Disabled input" />
+                <span asp-validation-for="fromCurrency" class="text-danger"></span>
+            </div>
+            <div class="mb-1">
+                <label asp-for="senderBankName" class="form-label"></label>
+                <select asp-for="senderBankName" asp-items="Model.senderBankList" class="form-select">
+                    <option value="">Select Sender Bank List</option>
+                </select>
+                <span asp-validation-for="senderBankName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-1">
+                <label asp-for="senderBankAccNo" class="form-label"></label>
+                <input asp-for="senderBankAccNo" class="form-control" />
+                <span asp-validation-for="senderBankAccNo" class="text-danger"></span>
+            </div>
+
+            <div class="mb-1">
+                <label asp-for="transferAmt" class="form-label"></label>
+                <input asp-for="transferAmt" class="form-control" id="transferamt" placeholder="Disabled input" />
+                <span asp-validation-for="transferAmt" class="text-danger"></span>
+            </div>
+            <div class="mb-1">
+                <label asp-for="toCurrency" class="form-label"></label>
+                <input asp-for="toCurrency" class="form-control" />
+                <span asp-validation-for="toCurrency" class="text-danger"></span>
+            </div>
+            <div class="mb-1">
+                <label asp-for="receiverBankName" class="form-label"></label>
+                <select asp-for="receiverBankName" asp-items="Model.receiverBankList" class="form-select">
+                    <option value="">Select Sender Bank List</option>
+                </select>
+                <span asp-validation-for="receiverBankName" class="text-danger"></span>
+            </div>
+            <div class="mb-1">
+                <label asp-for="receiverBankAccNo" class="form-label"></label>
+                <input asp-for="receiverBankAccNo" class="form-control" />
+                <span asp-validation-for="receiverBankAccNo" class="text-danger"></span>
+            </div>
+            <div class="mb-1">
+                <label asp-for="amtToBeReceived" class="form-label"></label>
+                <input asp-for="amtToBeReceived" class="form-control" id="amtReceived"/>
+                <span asp-validation-for="amtToBeReceived" class="text-danger"></span>
+            </div>
+            <input type="hidden" name="ExchangeRate" class="form-control" value="@ViewBag.ExchangeRate">
+            <div class="d-grid col-6 mx-auto mt-3">
+                <button class="btn btn-primary" type="submit">Confirm</button>
+            </div>
+         </form>
+        
+    </div>
+</div>
+<script>
+     const inputfield = document.getElementById("transferamt");
+     const amtReceived = document.getElementById("amtReceived");
+     inputfield.addEventListener('input',(event) => {
+        const value = `{@ViewBag.ExchangeRate}`;
+        const arr = value.split("=");
+        if(arr)
+        {
+            var finalsum = parseFloat(arr[1]) * event.target.value;
+            amtReceived.value = finalsum;
+        }
+     });
+</script>
